@@ -2,6 +2,10 @@
 
 A full-stack application designed to help users learn data structures and algorithms by providing an AI-powered teaching assistant for LeetCode problems.
 
+# Live Demo : https://muse-kan2.onrender.com/
+## email : amriteshindal29@gmail.com
+## password: 123456
+
 ## Overview
 
 The DSA Teaching Assistant is an interactive platform that combines LeetCode problems with AI guidance. This application helps users learn data structures and algorithms by providing:
