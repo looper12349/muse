@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { authState } from './recoil/atoms/authAtom';
 import { checkToken } from './utils/tokenManager';
@@ -12,6 +12,14 @@ import Thread from './pages/Thread';
 
 // Layout
 import AppLayout from './components/layout/AppLayout';
+
+// Auth protection component
+const RequireAuth = ({ isAuthenticated }) => {
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" replace />;
+  }
+  return <Outlet />;
+};
 
 const App = () => {
   const [auth, setAuth] = useRecoilState(authState);
@@ -68,15 +76,5 @@ const App = () => {
     </Router>
   );
 };
-
-// Auth protection component
-const RequireAuth = ({ isAuthenticated, children }) => {
-  if (!isAuthenticated) {
-    return <Navigate to="/auth" replace />;
-  }
-  return <Outlet />;
-};
-
-import { Outlet } from 'react-router-dom';
 
 export default App;

@@ -1,6 +1,6 @@
 // lib/aceternity-ui/background-gradient.jsx
 "use client";
-import { cn } from "../utils/cn";
+import { cn } from "../aceternity-ui/utils";
 import React, { useEffect, useRef, useState } from "react";
 
 export const BackgroundGradient = ({

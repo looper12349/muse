@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Hash, MoreVertical, Settings, Trash, Edit } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Badge from '../common/Badge';
-import { DIFFICULTY_COLORS, LLM_PROVIDER_NAMES } from '../../utils/constants';
+import { DIFFICULTY_COLORS, LLM_PROVIDER_NAMES, LLM_PROVIDER_ICONS } from '../../utils/constants';
 
 const ThreadHeader = ({ 
   thread, 

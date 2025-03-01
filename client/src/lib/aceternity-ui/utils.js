@@ -6,6 +6,9 @@
  * @param {string[]} classes - Array of class names
  * @returns {string} Combined class names
  */
+
+import React from 'react';
+
 export const cn = (...classes) => {
     return classes.filter(Boolean).join(" ");
   };
@@ -95,4 +98,60 @@ export const cn = (...classes) => {
     });
     
     return result;
+  };
+
+  export const useCanvas = (draw, options = {}) => {
+    const { 
+      context = "2d",
+      animate = false, 
+      width, 
+      height,
+      ...canvasProps 
+    } = options;
+    
+    const canvasRef = React.useRef(null);
+    const requestIdRef = React.useRef(null);
+    
+    React.useEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext(context);
+      
+      const handleResize = () => {
+        if (width && height) {
+          canvas.width = width;
+          canvas.height = height;
+        } else {
+          const { width, height } = canvas.getBoundingClientRect();
+          canvas.width = width;
+          canvas.height = height;
+        }
+        
+        // Initial draw
+        draw(ctx, canvas);
+      };
+      
+      window.addEventListener('resize', handleResize);
+      handleResize();
+      
+      // Animation logic
+      let requestId;
+      if (animate) {
+        const render = () => {
+          draw(ctx, canvas);
+          requestId = window.requestAnimationFrame(render);
+        };
+        render();
+      }
+      
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        if (animate && requestId) {
+          window.cancelAnimationFrame(requestId);
+        }
+      };
+    }, [draw, context, animate, width, height]);
+    
+    return canvasRef;
   };
