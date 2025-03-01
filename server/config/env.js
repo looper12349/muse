@@ -14,7 +14,7 @@ module.exports = {
   JWT_EXPIRE: process.env.JWT_EXPIRE || '30d',
   
   // LLM Configuration
-  DEFAULT_LLM_PROVIDER: process.env.DEFAULT_LLM_PROVIDER || 'openai',
+  DEFAULT_LLM_PROVIDER: process.env.DEFAULT_LLM_PROVIDER || 'google',
   
   // OpenAI
   OPENAI_API_KEY: process.env.OPENAI_API_KEY,
