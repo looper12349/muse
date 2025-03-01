@@ -1,41 +1,86 @@
+/**
+ * Problem.js
+ * MongoDB model for LeetCode problems
+ */
 const mongoose = require('mongoose');
 
 const ProblemSchema = new mongoose.Schema({
+  // LeetCode URL
   leetcodeUrl: {
     type: String,
-    required: [true, 'Please provide the LeetCode URL'],
+    required: true,
+    unique: true,
     trim: true
   },
+  
+  // Problem ID (can be number or slug)
   problemId: {
     type: String,
-    trim: true
+    required: true,
+    index: true
   },
+  
+  // Problem title
   title: {
     type: String,
+    required: true,
     trim: true
   },
+  
+  // Difficulty level
   difficulty: {
     type: String,
     enum: ['Easy', 'Medium', 'Hard', 'Unknown'],
     default: 'Unknown'
   },
+  
+  // Problem description (HTML content)
   description: {
-    type: String
+    type: String,
+    required: true
   },
+  
+  // Problem tags
   tags: [{
-    type: String
+    type: String,
+    trim: true
   }],
-  createdAt: {
+  
+  // Last updated timestamp
+  lastUpdated: {
     type: Date,
     default: Date.now
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now
+  
+  // Additional metadata
+  metadata: {
+    type: Map,
+    of: mongoose.Schema.Types.Mixed,
+    default: {}
+  },
+  
+  // Track scraping attempts
+  scrapingAttempts: {
+    type: Number,
+    default: 0
+  },
+  
+  // Last scraping error
+  scrapingError: {
+    type: String,
+    default: null
   }
+}, {
+  timestamps: true
 });
 
-// Create index for leetcodeUrl for faster lookups
-ProblemSchema.index({ leetcodeUrl: 1 });
+// Add text index for better search
+ProblemSchema.index({
+  title: 'text',
+  description: 'text',
+  tags: 'text'
+});
 
-module.exports = mongoose.model('Problem', ProblemSchema);
+const Problem = mongoose.model('Problem', ProblemSchema);
+
+module.exports = Problem;
